@@ -1,0 +1,52 @@
+{
+  "name": "@ephys/ftp",
+  "version": "1.0.0",
+  "description": "Duck CLI client",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "start:dev": "check-engines && concurrently npm:start:dev:*",
+    "start:dev:electron": "NODE_ENV=development DEV_APP_PORT=3001 electron .",
+    "start:dev:rjs": "NODE_ENV=development rjs start --features=-service-worker --port 3001",
+    "build": "NODE_ENV=production rjs build client server",
+    "rework:dev": "npm i @reworkjs/core@git@bitbucket.org:foobarhq/reworkjs-build.git#develop",
+    "rework:stable": "npm i @reworkjs/core@latest"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.9.0",
+    "@foobarhq/eslint-config": "^7.0.1",
+    "@foobarhq/stylelint-config": "^2.0.0",
+    "@loadable/component": "^5.12.0",
+    "@material-ui/core": "^4.9.9",
+    "@material-ui/icons": "^4.9.1",
+    "@reworkjs/core": "^0.31.1",
+    "@reworkjs/postcss-preset-reworkjs": "^0.4.1",
+    "@types/loadable__component": "^5.10.0",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "check-engines": "^1.5.0",
+    "classnames": "^2.2.6",
+    "concurrently": "^5.1.0",
+    "electron": "^8.2.1",
+    "eslint": "^6.8.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.1.2",
+    "normalize.css": "^8.0.1",
+    "react": "^16.13.1",
+    "react-cookie": "^4.0.3",
+    "react-dom": "^16.13.1",
+    "react-intl": "^3.12.1",
+    "react-query": "^1.2.1",
+    "react-router-dom": "^5.1.2",
+    "stylelint": "^13.3.0",
+    "swr": "^0.2.0",
+    "tslint": "^6.1.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "focus-visible": "^5.1.0"
+  }
+}

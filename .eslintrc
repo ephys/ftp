@@ -1,0 +1,26 @@
+{
+  "extends": ["@foobarhq/eslint-config", "@foobarhq/eslint-config/browser"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "@typescript-eslint/eslint-plugin-tslint"
+  ],
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
+  "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error", {
+      "varsIgnorePattern": "^ignore"
+    }],
+    "import/no-unresolved": "off",
+
+    "no-useless-constructor": "off",
+    "@typescript-eslint/no-useless-constructor": "error",
+    "no-undefined": "off",
+    "jsx-a11y/control-has-associated-label": "off"
+  },
+  "globals": {
+    "globalThis": true
+  }
+}

@@ -1,0 +1,32 @@
+.separator,
+.separatorSingle {
+  margin: 8px 0;
+}
+
+.separatorSingle {
+  height: 1px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  border: 0;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+
+  &::after, &::before {
+    content: '';
+    height: 1px;
+    background: rgba(0, 0, 0, 0.12);
+    width: 100%;
+  }
+
+  &::before {
+    margin-right: 8px;
+  }
+
+  &::after {
+    margin-left: 8px;
+  }
+}

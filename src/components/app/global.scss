@@ -1,0 +1,126 @@
+@import '../../utils/vars';
+@import '~normalize.css';
+
+@import url('https://fonts.googleapis.com/css?family=Space+Mono&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-family: $defaultFont;
+
+  color: #000000;
+  min-height: 100%;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+html,
+body {
+  // prevent pull-to-refresh on chrome
+  overscroll-behavior: contain;
+}
+
+html,
+body,
+:global(#app) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+body {
+  background: $slate;
+  color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400;
+  margin: 0;
+}
+
+//h1 {
+//  font-size: $fontSizeMainTitle;
+//}
+//
+//h2 {
+//  font-size: $fontSizeSubtitle;
+//}
+//
+//h3 {
+//  font-size: 1rem;
+//}
+
+p {
+  margin: 0 0 1em;
+}
+
+strong {
+  font-weight: 600;
+}
+
+a {
+  //color: #4ba2ca;
+  text-decoration: none;
+}
+
+form {
+  margin: 0;
+}
+
+form span {
+  width: auto;
+}
+
+select {
+  border-radius: 5px;
+}
+
+pre {
+  margin: 0;
+  font-family: $monospace;
+}
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+body:global(.js-focus-visible) *:not(:global(.focus-visible)) {
+  outline: none;
+}
+
+body:not(:global(.js-focus-visible)) {
+  &:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+@keyframes :global(animFadeOut) {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes :global(fadeIn) {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

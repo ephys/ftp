@@ -1,0 +1,38 @@
+@import '../../utils/vars';
+
+.page {
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.newServerPopup {
+
+}
+
+.newServerForm {
+  background: white;
+  color: black;
+  padding: 16px;
+  border-radius: 4px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.fieldGroup {
+  margin-top: 8px;
+}
+
+.urlInput {
+  flex: 1;
+  border-radius: 4px;
+  border: none;
+  padding: 4px 8px;
+  font-family: $monospace;
+  background: rgba(black, 0.1);
+  //min-width: 300px;
+  width: 100%;
+
+  border-bottom: 1px rgba(white, 0.1) solid;
+}

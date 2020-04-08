@@ -1,0 +1,4 @@
+{
+  "routes": "src/**/*.route.{js,jsx,ts,tsx,mjs}",
+  "entry-react": "./src/components/app"
+}

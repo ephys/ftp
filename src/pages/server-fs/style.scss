@@ -1,0 +1,71 @@
+@import '../../utils/vars';
+
+.actionBar {
+  background: rgba(black, 0.2);
+  color: white;
+  padding: 8px;
+
+  display: flex;
+}
+
+.changeCwdForm {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: $monospace;
+
+  span {
+    margin-right: 8px; // TODO replace with gap property
+  }
+}
+
+.cwdInput {
+  flex: 1;
+  border-radius: 4px;
+  border: none;
+  padding: 8px;
+  color: inherit;
+  font: inherit;
+  background: rgba(white, 0.1);
+  min-width: 300px;
+}
+
+.logOutput {
+  background: black;
+  color: white;
+  padding: 8px;
+  word-break: break-all;
+  white-space: pre-wrap;
+  overflow: auto;
+  max-height: 300px;
+}
+
+.fsEntry.fsEntry {
+  border-bottom: 1px rgba(white, 0.1) solid;
+  color: white;
+}
+
+.fsEntryIcon.fsEntryIcon {
+  color: white;
+}
+
+.activityBarWrapper {
+  position: relative;
+}
+
+.activityBar.activityBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.disabledRefreshBtn.disabledRefreshBtn.disabledRefreshBtn {
+  color: white;
+  opacity: 0.5;
+}
+
+.fsArea {
+  flex: 1;
+}
