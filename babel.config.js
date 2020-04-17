@@ -6,4 +6,7 @@ module.exports = {
       allExtensions: true,
     }],
   ],
+  plugins: [
+    '@babel/plugin-proposal-class-properties',
+  ],
 };

@@ -26,7 +26,7 @@ export function getServer(id: number): ServerCredentials | null {
     return null;
   }
 
-  const server = JSON.parse(uncached);
+  const server = Object.freeze(JSON.parse(uncached));
   serverList.set(id, server);
 
   return server;

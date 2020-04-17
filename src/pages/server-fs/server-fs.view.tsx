@@ -11,8 +11,12 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import { ContextMenuItem, useContextMenu } from '../../components/context-menu';
 import Page from '../../components/page';
 import { FsEntry, parseFsEntry, useDuckList } from '../../api/list';
-import css from './style.scss';
 import { getServer } from '../../api/server-list';
+import { duckUpload } from '../../api/upload';
+import css from './style.scss';
+
+const path = window.require('path');
+const { ipcRenderer } = window.require('electron');
 
 /*
 TODO:
@@ -49,9 +53,6 @@ TODO:
  - virtualize list for HUGE content like assets.mmc.li/images
  - compact list mode
  */
-
-const path = window.require('path');
-const { ipcRenderer } = window.require('electron');
 
 export default function ServerFsView() {
   const [cwd, setCwd] = React.useState('/');
@@ -160,6 +161,38 @@ export default function ServerFsView() {
     res.refetch();
   }
 
+  function onDragEnter(e) {
+    e.preventDefault();
+  }
+
+  function onDragOver(e) {
+    e.preventDefault();
+  }
+
+  function onDragLeave(e) {
+    e.preventDefault();
+  }
+
+  async function onDrop(e: DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+
+    const promises = [];
+
+    for (const file of e.dataTransfer.files) {
+      const from = file.path;
+      const fileName = path.basename(file.path);
+      const to = path.join(cwd, fileName);
+
+      promises.push(duckUpload(server, from, to));
+    }
+
+    await Promise.all(promises);
+
+    alert('upload complete');
+
+    res.refetch();
+  }
+
   /*
   // TODO: logs
   // - open through action menu (file -> logs)
@@ -196,7 +229,14 @@ export default function ServerFsView() {
         {res.isFetching && <LinearProgress className={css.activityBar} />}
       </div>
 
-      <div data-area="file-system" className={css.fsArea}>
+      <div
+        data-area="file-system"
+        className={css.fsArea}
+        onDragEnter={onDragEnter}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
+      >
         <List>
           {cwd !== '/' && (
             <ListItem className={css.fsEntry} button onClick={goUp}>

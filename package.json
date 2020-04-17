@@ -15,6 +15,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-typescript": "^7.9.0",
     "@foobarhq/eslint-config": "^7.0.1",
     "@foobarhq/stylelint-config": "^2.0.0",

@@ -28,10 +28,6 @@ TODO
       -> open server-fs.view using history.push({}). Put server URL & username in route state
  */
 
-/*
-ftp://175106_ephys:bUkWKDsPqNNCRx6@62.210.45.54:21
- */
-
 export default function ServerListView() {
   return (
     <Page className={css.page}>
