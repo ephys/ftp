@@ -52,11 +52,12 @@ type Props = {
 
 const DEFAULT_VALUES = {
   protocol: 'ftp',
-  port: '22',
+  port: '21',
 };
 
 const DEFAULT_PORT = {
-  ftp: '22',
+  ftp: '21', // and ftps
+  sftp: '22', // and ssh
 };
 
 export function FtpForm(props: Props) {
@@ -81,6 +82,7 @@ export function FtpForm(props: Props) {
 
   React.useEffect(() => {
     try {
+      // TODO move to Url as this doesn't parse sftp
       const url = new URL(props.url);
 
       // ftp: -> ftp
@@ -132,10 +134,6 @@ export function FtpForm(props: Props) {
       <div className={css.fieldGroup}>
         <InputLabel>Password</InputLabel>
         <Input {...bind('password')} className={css.urlInput} />
-      </div>
-
-      <div className={css.fieldGroup} style={{ alignSelf: 'flex-end' }}>
-        <Button color="primary" variant="contained">Connect</Button>
       </div>
     </>
   );

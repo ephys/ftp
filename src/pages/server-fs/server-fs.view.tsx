@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,28 +12,32 @@ import { ContextMenuItem, useContextMenu } from '../../components/context-menu';
 import Page from '../../components/page';
 import { FsEntry, parseFsEntry, useDuckList } from '../../api/list';
 import css from './style.scss';
+import { getServer } from '../../api/server-list';
 
 /*
 TODO:
  - handle pathname changes
  - display last modified, permissions
- - context menu  https://www.electronjs.org/docs/api/menu
-    - mkdir
+ - context menu actions https://www.electronjs.org/docs/api/menu
+    - create directory / mkdir
     - chmod
     - copy
     - download
     - delete
     - edit
  - open logs on menu-click
- - select more than one item in the list (check google photos to figure out mechanic)
+ - select more than one item in the list                                                              (check google photos to figure out mechanic)
    - double click to open a folder
+   - double click a file downloads? opens with default app? prompt to let user choose?
    - click = select this one,
    - ctrl + click = ?
    - alt + click = ?
    - shift + click = ?
- - drag & drop file to upload
+ - Floating action button to upload in current directory
+ - drag file/folder from desktop to app to upload
    - when dragging above a file or nothing, display "upload to /"
    - when dragging above a folder, display "upload to /folder-name"
+ - drag file/folder from app to desktop to download (if that's possible)
  - FAB button for upload
  - list of files currently uploading
  - list of files currently downloading
@@ -49,13 +54,13 @@ const path = window.require('path');
 const { ipcRenderer } = window.require('electron');
 
 export default function ServerFsView() {
-  const uri = ''; // TODO
   const [cwd, setCwd] = React.useState('/');
+  const params = useParams<{ id: string }>();
+  const server = getServer(Number(params.id));
+  const uri = server.uri;
 
   const res = useDuckList({
-    uri,
-    username: '', // TODO
-    password: '', // TODO
+    ...server,
     pathname: cwd,
   });
 

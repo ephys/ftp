@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
+import { useHistory, generatePath } from 'react-router-dom';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 import Page from '../../components/page';
 import Separator from '../../components/separator';
+import { SERVER_FS_PATHNAME } from '../server-fs/server-fs.route';
+import { addServer } from '../../api/server-list';
 import { FtpForm } from './forms/ftp';
 import css from './style.scss';
-import Input from '@material-ui/core/Input';
+
+/*
+TODO
+ - server list
+ - FAB on server list to add a new server
+ - context menu on server list to forget a server
+ - how to pass info from server-list to server-view safely?
+    - app volatile state
+    - if saving server to keychain, remember server name in localstorage
+      else keep credentials in volatile state
+    - on "connect" click
+      -> attempt connection
+      -> save server info in localStorage (not the password)
+      -> keep credentials in volatile memory
+      -> open server-fs.view using history.push({}). Put server URL & username in route state
+ */
+
+/*
+ftp://175106_ephys:bUkWKDsPqNNCRx6@62.210.45.54:21
+ */
 
 export default function ServerListView() {
   return (
@@ -52,13 +76,34 @@ function NewServerPopup() {
   const [serverType, setServerType] = React.useState('ftp');
   const [url, setUrl] = React.useState('');
   const [urlEditKey, setUrlEditKey] = React.useState(0);
+  const history = useHistory();
 
   const FormComponent = SERVER_TYPES[serverType]?.form;
+
+  const attemptConnect = React.useCallback((e: SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const urlObj = new URL(url);
+
+    const { username, password } = urlObj;
+    urlObj.username = '';
+    urlObj.password = '';
+
+    const id = addServer({
+      uri: urlObj.toString(),
+      username,
+      password,
+    });
+
+    history.push({
+      pathname: generatePath(SERVER_FS_PATHNAME, { id }),
+    });
+  }, [url, history]);
 
   return (
     <div className={css.newServerPopup}>
       <h1>Add a server</h1>
-      <form className={css.newServerForm}>
+      <form className={css.newServerForm} onSubmit={attemptConnect}>
         <div className={css.fieldGroup}>
           <InputLabel>Server URL</InputLabel>
           <Input
@@ -83,6 +128,10 @@ function NewServerPopup() {
         </Select>
 
         {FormComponent && <FormComponent onUrlChange={setUrl} url={url} urlEditKey={urlEditKey} />}
+
+        <div className={css.fieldGroup} style={{ alignSelf: 'flex-end' }}>
+          <Button color="primary" variant="contained" type="submit">Connect</Button>
+        </div>
       </form>
     </div>
   );
