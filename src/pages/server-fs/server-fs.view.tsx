@@ -14,12 +14,17 @@ import { FsEntry, parseFsEntry, useDuckList } from '../../api/list';
 import { getServer } from '../../api/server-list';
 import { duckUpload } from '../../api/upload';
 import css from './style.scss';
+import { duckDelete } from '../../api/delete';
 
 const path = window.require('path');
 const { ipcRenderer } = window.require('electron');
 
 /*
 TODO:
+ - use browser history to allow using back/forward on mouse
+ - search in directory
+ - use monospace font (jetbrains's ?)
+ - queue system for operations (upload, delete, etc)
  - handle pathname changes
  - display last modified, permissions
  - context menu actions https://www.electronjs.org/docs/api/menu
@@ -104,7 +109,8 @@ export default function ServerFsView() {
   useContextMenu(e => {
     const menu = [];
 
-    if (e.target.closest('[data-fs-entry]') != null) {
+    const closestFile = e.target.closest('[data-fs-entry]');
+    if (closestFile != null) {
       menu.push(
         new ContextMenuItem({
           label: 'Open With', // TODO: 'Delete all 3 items if selecting more than 1
@@ -115,6 +121,17 @@ export default function ServerFsView() {
         new ContextMenuItem({ type: 'separator' }),
         new ContextMenuItem({
           label: 'Delete', // TODO: 'Delete all 3 items if selecting more than 1
+          click: async () => {
+            const pathname = path.join(cwd, closestFile.dataset.fsEntry);
+            if (!confirm(`Are you sure you want to delete ${pathname}`)) {
+              return;
+            }
+
+            // TODO: this should delete all selected files instead
+            await duckDelete(server, pathname);
+            alert(`${pathname} deleted`);
+            refresh();
+          },
         }),
         new ContextMenuItem({
           label: 'Copy To', // TODO: 'Copy all 3 items if selecting more than 1
@@ -138,13 +155,22 @@ export default function ServerFsView() {
           label: 'New Folder',
         }),
         new ContextMenuItem({
-          label: 'Upload',
+          label: `Upload To ${cwd}`,
+        }),
+      );
+    }
+
+    const closestDirectory = e.target.closest('[data-fs-type="directory"]');
+    if (closestDirectory) {
+      menu.push(
+        new ContextMenuItem({
+          label: `Upload To ${closestDirectory.dataset.fsEntry}`,
         }),
       );
     }
 
     return menu;
-  }, []);
+  }, [cwd, server]);
 
   // TODO use history state
   function clickEntry(entry: FsEntry) {
@@ -256,6 +282,7 @@ export default function ServerFsView() {
                 button
                 onClick={() => clickEntry(entry)}
                 data-fs-entry={entry.name}
+                data-fs-type={entry.isDir ? 'directory' : 'file'}
               >
                 <ListItemIcon className={css.fsEntryIcon}>
                   {entry.isDir && (
