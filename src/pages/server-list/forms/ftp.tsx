@@ -92,8 +92,8 @@ export function FtpForm(props: Props) {
         protocol,
         hostname: url.hostname,
         port: url.port || DEFAULT_PORT[protocol],
-        username: url.username,
-        password: url.password,
+        username: decodeURIComponent(url.username),
+        password: decodeURIComponent(url.password),
       });
     } catch (e) {
       setValues(DEFAULT_VALUES);

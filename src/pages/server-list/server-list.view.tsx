@@ -87,8 +87,8 @@ function NewServerPopup() {
 
     const id = addServer({
       uri: urlObj.toString(),
-      username,
-      password,
+      username: decodeURIComponent(username),
+      password: decodeURIComponent(password),
     });
 
     history.push({

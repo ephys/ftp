@@ -87,5 +87,9 @@ async function fetchDuckList(urlString) {
 
   const res = await exec(`duck --longlist ${url.toString()} -u ${username} -p ${password} -y --verbose --quiet`);
 
+  if (res.stderr) {
+    console.dir(res.stderr);
+  }
+
   return res.stdout;
 }
