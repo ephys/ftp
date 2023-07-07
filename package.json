@@ -43,7 +43,7 @@
     "react-intl": "^3.12.1",
     "react-query": "^1.2.1",
     "react-router-dom": "^5.1.2",
-    "stylelint": "^13.3.0",
+    "stylelint": "^15.10.1",
     "swr": "^0.2.0",
     "tslint": "^6.1.1",
     "typescript": "^3.8.3"
