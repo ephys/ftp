@@ -22,7 +22,7 @@
     "@loadable/component": "^5.12.0",
     "@material-ui/core": "^4.9.9",
     "@material-ui/icons": "^4.9.1",
-    "@reworkjs/core": "^0.31.1",
+    "@reworkjs/core": "^0.35.4",
     "@reworkjs/postcss-preset-reworkjs": "^0.4.1",
     "@types/loadable__component": "^5.10.0",
     "@types/react-router-dom": "^5.1.4",
